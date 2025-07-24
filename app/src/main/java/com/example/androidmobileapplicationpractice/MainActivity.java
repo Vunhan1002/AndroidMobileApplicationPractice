@@ -1,65 +1,59 @@
 package com.example.androidmobileapplicationpractice;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.text.DecimalFormat;
 
-public class MainActivity extends AppCompatActivity {
-
-    EditText edtdoC, edtdoF;
-    Button btncf, btnfc, btnClear;
+public class MainActivity extends Activity {
+    EditText editten, editchieucao, editcannang, editBMI, editChandoan;
+    Button btnTinhBMI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); // liên kết giao diện XML
 
-        // Ánh xạ các thành phần từ layout XML
-        edtdoC = findViewById(R.id.edtdoC);
-        edtdoF = findViewById(R.id.edtdoF);
-        btncf = findViewById(R.id.btncf);       // Celsius -> Fahrenheit
-        btnfc = findViewById(R.id.btnfc);       // Fahrenheit -> Celsius
-        btnClear = findViewById(R.id.btnClear); // Xoá dữ liệu
+        // Ánh xạ các thành phần trong layout vào biến Java
+        editten = findViewById(R.id.editten);
+        editchieucao = findViewById(R.id.editchieucao);
+        editcannang = findViewById(R.id.editcannang);
+        editBMI = findViewById(R.id.editBMI);
+        editChandoan = findViewById(R.id.editChandoan);
+        btnTinhBMI = findViewById(R.id.btnTinhBMI);
 
-        // Sự kiện chuyển từ độ C sang độ F
-        btncf.setOnClickListener(new View.OnClickListener() {
+        // Bắt sự kiện click vào nút "Tính BMI"
+        btnTinhBMI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DecimalFormat dcf = new DecimalFormat("#.00"); // Định dạng kết quả
-                String doC = edtdoC.getText().toString(); // Lấy chuỗi nhập vào
-                if (!doC.isEmpty()) {
-                    int c = Integer.parseInt(doC); // Chuyển sang số nguyên
-                    double f = c * 1.8 + 32;       // Công thức đổi C -> F
-                    edtdoF.setText(dcf.format(f)); // Hiển thị kết quả
+                // Lấy chiều cao và cân nặng từ EditText và chuyển sang kiểu double
+                double H = Double.parseDouble(editchieucao.getText().toString());
+                double W = Double.parseDouble(editcannang.getText().toString());
+
+                // Tính BMI theo công thức: BMI = W / (H^2)
+                double BMI = W / Math.pow(H, 2);
+                String chandoan = "";
+
+                // Phân loại kết quả BMI
+                if (BMI < 18) {
+                    chandoan = "Bạn gầy";
+                } else if (BMI <= 24.9) {
+                    chandoan = "Bạn bình thường";
+                } else if (BMI <= 29.9) {
+                    chandoan = "Bạn béo phì độ 1";
+                } else if (BMI <= 34.9) {
+                    chandoan = "Bạn béo phì độ 2";
+                } else {
+                    chandoan = "Bạn béo phì độ 3";
                 }
-            }
-        });
 
-        // Sự kiện chuyển từ độ F sang độ C
-        btnfc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DecimalFormat dcf = new DecimalFormat("#.00");
-                String doF = edtdoF.getText().toString();
-                if (!doF.isEmpty()) {
-                    int f = Integer.parseInt(doF);
-                    double c = (f - 32) / 1.8; // Công thức đổi F -> C
-                    edtdoC.setText(dcf.format(c));
-                }
-            }
-        });
-
-        // Sự kiện nút xóa cả hai ô nhập
-        btnClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edtdoC.setText("");
-                edtdoF.setText("");
+                // Định dạng và hiển thị kết quả
+                DecimalFormat dcf = new DecimalFormat("#.0");
+                editBMI.setText(dcf.format(BMI));
+                editChandoan.setText(chandoan);
             }
         });
     }
