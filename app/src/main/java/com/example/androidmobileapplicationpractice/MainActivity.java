@@ -1,79 +1,65 @@
 package com.example.androidmobileapplicationpractice;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText edt1, edt2;
-    EditText edt3;
-    Button btncong, btntru, btnnhan, btnchia;
+    EditText edtdoC, edtdoF;
+    Button btncf, btnfc, btnClear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Ánh xạ các thành phần giao diện
-        edt1 = findViewById(R.id.edt1);
-        edt2 = findViewById(R.id.edt2);
-        edt3 = findViewById(R.id.edt3);
-        btncong = findViewById(R.id.btncong);
-        btntru = findViewById(R.id.btntru);
-        btnnhan = findViewById(R.id.btnnhan);
-        btnchia = findViewById(R.id.btnchia);
+        // Ánh xạ các thành phần từ layout XML
+        edtdoC = findViewById(R.id.edtdoC);
+        edtdoF = findViewById(R.id.edtdoF);
+        btncf = findViewById(R.id.btncf);       // Celsius -> Fahrenheit
+        btnfc = findViewById(R.id.btnfc);       // Fahrenheit -> Celsius
+        btnClear = findViewById(R.id.btnClear); // Xoá dữ liệu
 
-        // Xử lý nút cộng
-        btncong.setOnClickListener(new View.OnClickListener() {
+        // Sự kiện chuyển từ độ C sang độ F
+        btncf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int a = Integer.parseInt("0" + edt1.getText().toString());
-                int b = Integer.parseInt("0" + edt2.getText().toString());
-                edt3.setText("a + b = " + (a + b));
-            }
-        });
-
-        // Xử lý nút trừ
-        btntru.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int a = Integer.parseInt("0" + edt1.getText().toString());
-                int b = Integer.parseInt("0" + edt2.getText().toString());
-                edt3.setText("a - b = " + (a - b));
-            }
-        });
-
-        // Xử lý nút nhân
-        btnnhan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int a = Integer.parseInt("0" + edt1.getText().toString());
-                int b = Integer.parseInt("0" + edt2.getText().toString());
-                edt3.setText("a * b = " + (a * b));
-            }
-        });
-
-        // Xử lý nút chia
-        btnchia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int a = Integer.parseInt("0" + edt1.getText().toString());
-                int b = Integer.parseInt("0" + edt2.getText().toString());
-                if (b == 0) {
-                    edt3.setText("B phải khác 0");
-                } else {
-                    edt3.setText("a / b = " + ((float) a / b));
+                DecimalFormat dcf = new DecimalFormat("#.00"); // Định dạng kết quả
+                String doC = edtdoC.getText().toString(); // Lấy chuỗi nhập vào
+                if (!doC.isEmpty()) {
+                    int c = Integer.parseInt(doC); // Chuyển sang số nguyên
+                    double f = c * 1.8 + 32;       // Công thức đổi C -> F
+                    edtdoF.setText(dcf.format(f)); // Hiển thị kết quả
                 }
+            }
+        });
+
+        // Sự kiện chuyển từ độ F sang độ C
+        btnfc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DecimalFormat dcf = new DecimalFormat("#.00");
+                String doF = edtdoF.getText().toString();
+                if (!doF.isEmpty()) {
+                    int f = Integer.parseInt(doF);
+                    double c = (f - 32) / 1.8; // Công thức đổi F -> C
+                    edtdoC.setText(dcf.format(c));
+                }
+            }
+        });
+
+        // Sự kiện nút xóa cả hai ô nhập
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtdoC.setText("");
+                edtdoF.setText("");
             }
         });
     }
