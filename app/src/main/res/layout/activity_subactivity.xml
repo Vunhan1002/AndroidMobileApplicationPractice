@@ -21,7 +21,6 @@
         android:id="@+id/btnok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:text="OK"
         android:textSize="18sp" />
 </LinearLayout>

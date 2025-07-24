@@ -14,55 +14,66 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    Button btncall;
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Toast.makeText(this, "CR424 - onDestroy()", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Toast.makeText(this, "CR424 - onPause()", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Toast.makeText(this, "CR424 - onRestart()", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Toast.makeText(this, "CR424 - onResume()", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Toast.makeText(this, "CR424 - onStart()", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Toast.makeText(this, "CR424 - onStop()", Toast.LENGTH_SHORT).show();
-    }
+    EditText edt1, edt2;
+    EditText edt3;
+    Button btncong, btntru, btnnhan, btnchia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toast.makeText(this, "CR424 - onCreat()", Toast.LENGTH_SHORT).show();
-        btncall = findViewById(R.id.btncall);
-        btncall.setOnClickListener(new View.OnClickListener() {
+
+        // Ánh xạ các thành phần giao diện
+        edt1 = findViewById(R.id.edt1);
+        edt2 = findViewById(R.id.edt2);
+        edt3 = findViewById(R.id.edt3);
+        btncong = findViewById(R.id.btncong);
+        btntru = findViewById(R.id.btntru);
+        btnnhan = findViewById(R.id.btnnhan);
+        btnchia = findViewById(R.id.btnchia);
+
+        // Xử lý nút cộng
+        btncong.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent1 = new Intent(MainActivity.this, Subactivity.class);
-                startActivity(intent1);
+            public void onClick(View v) {
+                int a = Integer.parseInt("0" + edt1.getText().toString());
+                int b = Integer.parseInt("0" + edt2.getText().toString());
+                edt3.setText("a + b = " + (a + b));
+            }
+        });
+
+        // Xử lý nút trừ
+        btntru.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int a = Integer.parseInt("0" + edt1.getText().toString());
+                int b = Integer.parseInt("0" + edt2.getText().toString());
+                edt3.setText("a - b = " + (a - b));
+            }
+        });
+
+        // Xử lý nút nhân
+        btnnhan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int a = Integer.parseInt("0" + edt1.getText().toString());
+                int b = Integer.parseInt("0" + edt2.getText().toString());
+                edt3.setText("a * b = " + (a * b));
+            }
+        });
+
+        // Xử lý nút chia
+        btnchia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int a = Integer.parseInt("0" + edt1.getText().toString());
+                int b = Integer.parseInt("0" + edt2.getText().toString());
+                if (b == 0) {
+                    edt3.setText("B phải khác 0");
+                } else {
+                    edt3.setText("a / b = " + ((float) a / b));
+                }
             }
         });
     }
