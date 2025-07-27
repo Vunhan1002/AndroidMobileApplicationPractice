@@ -5,56 +5,41 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
 public class MainActivity extends Activity {
-    EditText editten, editchieucao, editcannang, editBMI, editChandoan;
-    Button btnTinhBMI;
+    EditText editNamDuongLich;
+    TextView textViewAmLich;
+    Button btnChuyenDoi;
+
+    String[] can = {"Canh", "Tân", "Nhâm", "Quý", "Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ"};
+    String[] chi = {"Thân", "Dậu", "Tuất", "Hợi", "Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // liên kết giao diện XML
+        setContentView(R.layout.activity_main);
 
-        // Ánh xạ các thành phần trong layout vào biến Java
-        editten = findViewById(R.id.editten);
-        editchieucao = findViewById(R.id.editchieucao);
-        editcannang = findViewById(R.id.editcannang);
-        editBMI = findViewById(R.id.editBMI);
-        editChandoan = findViewById(R.id.editChandoan);
-        btnTinhBMI = findViewById(R.id.btnTinhBMI);
+        editNamDuongLich = findViewById(R.id.editNamDuongLich);
+        textViewAmLich = findViewById(R.id.textView5);
+        btnChuyenDoi = findViewById(R.id.button1);
 
-        // Bắt sự kiện click vào nút "Tính BMI"
-        btnTinhBMI.setOnClickListener(new View.OnClickListener() {
+        btnChuyenDoi.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Lấy chiều cao và cân nặng từ EditText và chuyển sang kiểu double
-                double H = Double.parseDouble(editchieucao.getText().toString());
-                double W = Double.parseDouble(editcannang.getText().toString());
-
-                // Tính BMI theo công thức: BMI = W / (H^2)
-                double BMI = W / Math.pow(H, 2);
-                String chandoan = "";
-
-                // Phân loại kết quả BMI
-                if (BMI < 18) {
-                    chandoan = "Bạn gầy";
-                } else if (BMI <= 24.9) {
-                    chandoan = "Bạn bình thường";
-                } else if (BMI <= 29.9) {
-                    chandoan = "Bạn béo phì độ 1";
-                } else if (BMI <= 34.9) {
-                    chandoan = "Bạn béo phì độ 2";
-                } else {
-                    chandoan = "Bạn béo phì độ 3";
+            public void onClick(View view) {
+                try {
+                    int namDuong = Integer.parseInt(editNamDuongLich.getText().toString().trim());
+                    int indexCan = namDuong % 10;
+                    int indexChi = namDuong % 12;
+                    String namAm = can[indexCan] + " " + chi[indexChi];
+                    textViewAmLich.setText(namAm);
+                }catch (NumberFormatException e){
+                    textViewAmLich.setText("Vui lòng nhập số hợp lệ");
                 }
-
-                // Định dạng và hiển thị kết quả
-                DecimalFormat dcf = new DecimalFormat("#.0");
-                editBMI.setText(dcf.format(BMI));
-                editChandoan.setText(chandoan);
             }
         });
+
     }
 }
