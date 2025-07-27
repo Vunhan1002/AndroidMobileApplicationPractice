@@ -10,36 +10,84 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 
 public class MainActivity extends Activity {
-    EditText editNamDuongLich;
-    TextView textViewAmLich;
-    Button btnChuyenDoi;
+    Button btntieptuc, btngiai, btnthoat;
+    EditText edita, editb, editc;
+    TextView txtKQ;
 
-    String[] can = {"Canh", "Tân", "Nhâm", "Quý", "Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ"};
-    String[] chi = {"Thân", "Dậu", "Tuất", "Hợi", "Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editNamDuongLich = findViewById(R.id.editNamDuongLich);
-        textViewAmLich = findViewById(R.id.textView5);
-        btnChuyenDoi = findViewById(R.id.button1);
+        btntieptuc = findViewById(R.id.btntieptuc);
+        btngiai = findViewById(R.id.btngiai);
+        btnthoat = findViewById(R.id.btnthoat);
 
-        btnChuyenDoi.setOnClickListener(new View.OnClickListener() {
+        edita = findViewById(R.id.edita);
+        editb = findViewById(R.id.editb);
+        editc = findViewById(R.id.editc);
+        txtKQ = findViewById(R.id.txtKQ);
+
+        DecimalFormat dcf = new DecimalFormat("0.00");
+
+        btngiai.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                try {
-                    int namDuong = Integer.parseInt(editNamDuongLich.getText().toString().trim());
-                    int indexCan = namDuong % 10;
-                    int indexChi = namDuong % 12;
-                    String namAm = can[indexCan] + " " + chi[indexChi];
-                    textViewAmLich.setText(namAm);
-                }catch (NumberFormatException e){
-                    textViewAmLich.setText("Vui lòng nhập số hợp lệ");
+            public void onClick(View v) {
+                String sa = edita.getText().toString();
+                String sb = editb.getText().toString();
+                String sc = editc.getText().toString();
+
+                int a = Integer.parseInt(sa);
+                int b = Integer.parseInt(sb);
+                int c = Integer.parseInt(sc);
+
+                String kq = "";
+
+                if (a == 0) {
+                    if (b == 0) {
+                        if (c == 0)
+                            kq = "PT vô số nghiệm";
+                        else
+                            kq = "PT vô nghiệm";
+                    } else {
+                        kq = "PT có 1 nghiệm, x = " + dcf.format((double) -c / b);
+                    }
+                } else {
+                    double delta = b * b - 4 * a * c;
+                    if (delta < 0)
+                        kq = "PT vô nghiệm";
+                    else if (delta == 0)
+                        kq = "Pt có nghiệm kép: x1 = x2 = " + dcf.format(-b / (2.0 * a));
+                    else {
+                        double x1 = (-b + Math.sqrt(delta)) / (2 * a);
+                        double x2 = (-b - Math.sqrt(delta)) / (2 * a);
+                        kq = "Pt có 2 nghiệm: x1 = " + dcf.format(x1) + "; x2 = " + dcf.format(x2);
+                    }
                 }
+
+                txtKQ.setText(kq);
             }
         });
 
+        btntieptuc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edita.setText("");
+                editb.setText("");
+                editc.setText("");
+                txtKQ.setText("");
+                edita.requestFocus();
+            }
+        });
+
+        btnthoat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }
+
