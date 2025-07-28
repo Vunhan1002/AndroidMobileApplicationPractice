@@ -4,18 +4,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/editPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Input Phone Number"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="30sp" />
+
     <Button
         android:id="@+id/btnCall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Call Phone"
-        android:textSize="20sp" />
+        android:text="Call"
+        android:textSize="40sp" />
 
     <Button
-        android:id="@+id/btnSend"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send SMS"
-        android:textSize="20sp" />
+        android:text="Back"
+        android:textSize="40sp" />
 
 </LinearLayout>
