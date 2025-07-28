@@ -16,51 +16,48 @@ import androidx.core.view.WindowInsetsCompat;
 import java.text.DecimalFormat;
 
 public class ResultActivity extends AppCompatActivity {
-    EditText edtkq;
-    Button btnback;
-    TextView txtketqua;
+    EditText edtAA, edtBB;
+    Button btnsendtong, btnsendhieu;
+    Intent myintent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_result);
 
-        // Áp dụng padding cho các khu vực inset
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        edtAA = findViewById(R.id.edtAA);
+        edtBB = findViewById(R.id.edtBB);
+        btnsendtong = findViewById(R.id.btnsendtong);
+        btnsendhieu = findViewById(R.id.btnsendhieu);
+
+        // Nhận intent
+        myintent = getIntent();
+        int a = myintent.getIntExtra("soa", 0);
+        int b = myintent.getIntExtra("sob", 0);
+
+        // Hiển thị lại số để xác nhận
+        edtAA.setText(String.valueOf(a));
+        edtBB.setText(String.valueOf(b));
+
+        // Trả về tổng
+        btnsendtong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int sum = a + b;
+                myintent.putExtra("kq", sum);
+                setResult(33, myintent);
+                finish();
+            }
         });
 
-        // Khởi tạo các thành phần giao diện
-        edtkq = findViewById(R.id.edtkq); // EditText để hiển thị kết quả
-        btnback = findViewById(R.id.btnback);
-        txtketqua = findViewById(R.id.txtketqua);
-
-        // Lấy dữ liệu từ Intent
-        Intent yourintent = getIntent();
-        Bundle yourbundle = yourintent.getBundleExtra("mybackage");
-        if (yourbundle != null) {
-            int a = yourbundle.getInt("soa");
-            int b = yourbundle.getInt("sob");
-            String kq = "";
-            if (a == 0 && b == 0) {
-                kq = "Vô số nghiệm";
-            } else if (a == 0 && b != 0) {
-                kq = "Vô nghiệm";
-            } else {
-                DecimalFormat dc = new DecimalFormat("0.##");
-                kq = dc.format(-b * 1.0 / a);
-            }
-            edtkq.setText(kq); // Hiển thị kết quả trong EditText
-        }
-
-        // Xử lý sự kiện nút Back
-        btnback.setOnClickListener(new View.OnClickListener() {
+        // Trả về hiệu
+        btnsendhieu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finish(); // Quay lại MainActivity
+            public void onClick(View view) {
+                int sub = a - b;
+                myintent.putExtra("kq", sub);
+                setResult(34, myintent);
+                finish();
             }
         });
     }
