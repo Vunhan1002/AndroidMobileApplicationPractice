@@ -7,18 +7,19 @@
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is main Activity"
+        android:text="This is Child Activity"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:background="#A9DFBF" />
+        android:background="#F9E79F" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open Child Activity"
+        android:text="Back to Main Activity"
         android:layout_marginTop="20dp" />
 
 </LinearLayout>

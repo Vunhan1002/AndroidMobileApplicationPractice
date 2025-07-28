@@ -22,8 +22,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Subactivity"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
+        <activity
+            android:name=".ChildActivity"
+            android:exported="false">
+        </activity>
+
     </application>
 
 </manifest>
