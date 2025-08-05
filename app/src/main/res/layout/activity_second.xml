@@ -5,17 +5,17 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/editTextInput"
+    <TextView
+        android:id="@+id/textViewResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nhập nội dung..."
+        android:textSize="18sp"
         android:layout_marginBottom="16dp" />
 
     <Button
-        android:id="@+id/btnGoToSecond"
+        android:id="@+id/btnOpenBrowser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to Second Activity"
+        android:text="Open Browser"
         android:layout_gravity="center" />
 </LinearLayout>
