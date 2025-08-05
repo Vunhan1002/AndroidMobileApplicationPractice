@@ -6,24 +6,5 @@
     android:gravity="center"
     android:padding="16dp">
 
-    <ImageButton
-        android:id="@+id/btnplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/play"
-        android:layout_marginBottom="16dp"
-        android:adjustViewBounds="true"
-        android:maxHeight="100dp"
-        android:maxWidth="100dp" />
 
-    <ImageButton
-        android:id="@+id/btnstop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/stop"
-        android:adjustViewBounds="true"
-        android:maxHeight="100dp"
-        android:maxWidth="100dp" />
 </LinearLayout>
