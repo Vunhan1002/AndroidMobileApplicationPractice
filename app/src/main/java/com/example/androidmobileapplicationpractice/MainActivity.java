@@ -4,32 +4,42 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnCall, btnSend;
+    ImageButton btnplay, btnstop;
+    boolean flag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnCall = findViewById(R.id.btnCall);
-        btnSend = findViewById(R.id.btnSend);
+        btnplay = findViewById(R.id.btnplay);
+        btnstop = findViewById(R.id.btnstop);
 
-        btnCall.setOnClickListener(new View.OnClickListener() {
+        btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CallPhoneActivity.class);
-                startActivity(intent);
+                if (flag) {
+                    btnplay.setImageResource(R.drawable.pause);
+                    flag = false;
+                } else {
+                    btnplay.setImageResource(R.drawable.play);
+                    flag = true;
+                }
             }
         });
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
+        btnstop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SendSMSActivity.class);
-                startActivity(intent);
+                Intent intent2 = new Intent(MainActivity.this, MyService.class);
+                stopService(intent2);
+                btnplay.setImageResource(R.drawable.play);
+                flag = true;
             }
         });
     }
